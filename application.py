@@ -1,6 +1,7 @@
 import os
+import database_scripts as dbs
 
-from flask import Flask, session
+from flask import Flask, session, render_template, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,5 +30,16 @@ api_key = os.getenv("GOODREADS_API_KEY")
 
 @app.route("/")
 def index():
-    flights = db.execute("SELECT * FROM flights")
-    return "Project 1: TODO"
+    return render_template("login_page.html")
+
+@app.route("/login",methods=["post"])
+def login():
+    email = request.form.get("email")
+    passwd = request.form.get("password")
+    db = dbs.get_database_connection()
+    user = db.execute("SELECT * FROM users WHERE email=:email AND password=:password",{"email":email, "password":passwd})
+    if user is None:
+        return render_template()
+    else:
+        session['userid'] = user['userid']
+        return render_template()
