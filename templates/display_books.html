@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Books
+{% endblock %}
+
+{% block body %}
+    <h1>Books </h1>
+    <table border="" >
+    <thead align="center" style="margin: 10em"><th>ISBN</th> <th>Title</th><th>Author</th><th>Year</th></thead>
+    {% for book in books %}
+
+        <tr align="center" style="margin: 10em"><td>{{ book.isbn }}</td><td>{{ book.title }}</td><td>{{ book.author }}</td><td>{{ book.year }}</td> </tr>
+
+    {% endfor %}
+    </table>
+{% endblock %}
